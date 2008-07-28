@@ -12,16 +12,16 @@ my $apos = qr/ (?: ['’] [[:lower:]]* )? /x;
 while ( <> ) {
 	s{
 		\b (?:
-			( [[:alpha:]]+ [@.] [[:alpha:]@.]+ $apos ) # inline-dotted word or email
+			( [[:alpha:]]+ [@.:/] [[:alpha:]@.:/]+ $apos ) # URL, domain, or email
 			|
-			( (?i: $small_re ) $apos )                 # or small word (case-insensitive)
+			( (?i: $small_re ) $apos )                     # or small word (case-insensitive)
 			|
-			( [[:alpha:]] [[:lower:]'’]* $apos )       # or word w/o internal caps
+			( [[:alpha:]] [[:lower:]'’]* $apos )           # or word w/o internal caps
 			|
-			( [[:alpha:]] [[:alpha:]'’]* $apos )       # or some other word
+			( [[:alpha:]] [[:alpha:]'’]* $apos )           # or some other word
 		) \b
 	}{
-		  defined $1 ? $1         # preserve inline-dotted word
+		  defined $1 ? $1         # preserve URL, domain, or email
 		: defined $2 ? "\L$2"     # lowercase small word
 		: defined $3 ? "\u\L$3"   # capitalize word w/o internal caps
 		: $4                      # preserve other kinds of word
