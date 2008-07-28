@@ -10,13 +10,13 @@ my $small_re = join '|', @small_words;
 while ( <> ) {
 	s{
 		\b (?:
-			( [[:alpha:]]+ [.] [[:alpha:].]+ ) # inline-dotted word
+			( [[:alpha:]]+ [@.] [[:alpha:]@.]+ ) # inline-dotted word or email
 			|
-			( (?i: $small_re ) )               # or small word (case-insensitive)
+			( (?i: $small_re ) )                 # or small word (case-insensitive)
 			|
-			( [[:alpha:]] [[:lower:]'’]* )     # or word w/o internal caps
+			( [[:alpha:]] [[:lower:]'’]* )       # or word w/o internal caps
 			|
-			( [[:alpha:]] [[:alpha:]'’]* )     # or some other word
+			( [[:alpha:]] [[:alpha:]'’]* )       # or some other word
 		) \b
 	}{
 		  defined $1 ? $1         # preserve inline-dotted word
