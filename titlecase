@@ -7,16 +7,18 @@ use open qw( :utf8 :std );
 my @small_words = qw( (?<!q&)a an and as at(?!&t) but by en for if in of on or the to v[.]? via vs[.]? );
 my $small_re = join '|', @small_words;
 
+my $apos = qr/ (?: ['’] [[:lower:]]* )? /x;
+
 while ( <> ) {
 	s{
 		\b (?:
-			( [[:alpha:]]+ [@.] [[:alpha:]@.]+ ) # inline-dotted word or email
+			( [[:alpha:]]+ [@.] [[:alpha:]@.]+ $apos ) # inline-dotted word or email
 			|
-			( (?i: $small_re ) )                 # or small word (case-insensitive)
+			( (?i: $small_re ) $apos )                 # or small word (case-insensitive)
 			|
-			( [[:alpha:]] [[:lower:]'’]* )       # or word w/o internal caps
+			( [[:alpha:]] [[:lower:]'’]* $apos )       # or word w/o internal caps
 			|
-			( [[:alpha:]] [[:alpha:]'’]* )       # or some other word
+			( [[:alpha:]] [[:alpha:]'’]* $apos )       # or some other word
 		) \b
 	}{
 		  defined $1 ? $1         # preserve inline-dotted word
