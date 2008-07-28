@@ -16,9 +16,9 @@ while ( <> ) {
 			|
 			( (?i: $small_re ) $apos )                         # or small word (case-insensitive)
 			|
-			( [[:alpha:]] [[:lower:]'’]* $apos )               # or word w/o internal caps
+			( [[:alpha:]] [[:lower:]'’()\[\]{}]* $apos )       # or word w/o internal caps
 			|
-			( [[:alpha:]] [[:alpha:]'’]* $apos )               # or some other word
+			( [[:alpha:]] [[:alpha:]'’()\[\]{}]* $apos )       # or some other word
 		) (_*) \b
 	}{
 		$1 . (
