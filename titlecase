@@ -4,7 +4,7 @@ use warnings;
 use utf8;
 use open qw( :utf8 :std );
 
-my @small_words = qw( a an and as at but by en for if in of on or the to v[.]? via vs[.]? );
+my @small_words = qw( (?<!q&)a an and as at(?!&t) but by en for if in of on or the to v[.]? via vs[.]? );
 my $small_re = join '|', @small_words;
 
 while ( <> ) {
@@ -20,26 +20,24 @@ while ( <> ) {
 		) \b
 	}{
 		  defined $1 ? $1         # preserve inline-dotted word
-		: defined $2 ? "\L$2"     # lowercase all small word
+		: defined $2 ? "\L$2"     # lowercase small word
 		: defined $3 ? "\u\L$3"   # capitalize word w/o internal caps
 		: $4                      # preserve other kinds of word
 	}exgo;
 
+
+	# exceptions for small words: capitalize at start and end of title
 	s{
 		(  \A [[:punct:]]*        # start of title...
 		|  [:.;?!][ ]+['"“’]?  )  # or of subphrase...
 		( $small_re ) \b          # ... followed by small word
-	}{$1\u\L$2}xigo;              # -> capitalize
+	}{$1\u\L$2}xigo;
 
 	s{
 		\b ( $small_re )          # small word...
 		(?= [[:punct:]]* \Z )     # ... at the end of the title?
-	}{\u\L$1}xigo;                # then capitalize
+	}{\u\L$1}xigo;
 
-	# Special cases:
-	s{ V(s?)\. }{ v$1. }g;        # "v." and "vs.":
-	s{\b(AT&T|Q&A)\b}{\U$1}ig;    # "AT&T" and "Q&A", which get tripped up by
-	                              # self-contained small words "at" and "a"
 
 	print;
 }
