@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use utf8;
-use open qw( :utf8 :std );
+use open qw( :encoding(UTF-8) :std );
 
 my @small_words = qw( (?<!q&)a an and as at(?!&t) but by en for if in of on or the to v[.]? via vs[.]? );
 my $small_re = join '|', @small_words;

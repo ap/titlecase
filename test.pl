@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use open qw( :utf8 :std );
+use open qw( :encoding(UTF-8) :std );
 
 use Test::More;
 use IPC::Open2;
