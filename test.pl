@@ -142,3 +142,6 @@ This Is Trimming
 
   this is trimming  
 This Is Trimming
+
+IF IT’S ALL CAPS, FIX IT
+If It’s All Caps, Fix It
