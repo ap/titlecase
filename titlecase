@@ -32,6 +32,8 @@ my $small_re = join '|', @small_words;
 my $apos = qr/ (?: ['’] [[:lower:]]* )? /x;
 
 while ( <> ) {
+	s{\A\s+}{}, s{\s+\z}{};
+
 	s{
 		\b (_*) (?:
 			( [-_[:alpha:]]+ [@.:/] [-_[:alpha:]@.:/]+ $apos ) # URL, domain, or email
@@ -67,7 +69,7 @@ while ( <> ) {
 	}{\u\L$1}xigo;
 
 
-	print;
+	print $_, "\n";
 }
 
 # vim: ts=4 sts=4 sw=4 sr fdm=marker

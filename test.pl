@@ -133,3 +133,12 @@ A Thing
 
 Dr. Strangelove (or: how I Learned to Stop Worrying and Love the Bomb)
 Dr. Strangelove (Or: How I Learned to Stop Worrying and Love the Bomb)
+
+  this is trimming
+This Is Trimming
+
+this is trimming  
+This Is Trimming
+
+  this is trimming  
+This Is Trimming
