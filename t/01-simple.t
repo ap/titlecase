@@ -1,7 +1,7 @@
 #!perl -T
 
 use Test::More;
-use Lingua::EN::TitleCaps qw/titlecase/;
+use Lingua::EN::Titlecase::Simple qw/titlecase/;
 use open qw/:encoding(UTF-8)/;
 use utf8;
 

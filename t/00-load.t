@@ -3,8 +3,8 @@
 use Test::More tests => 1;
 
 BEGIN {
-    use_ok( 'Lingua::EN::TitleCaps' ) || print "Bail out!
+    use_ok( 'Lingua::EN::Titlecase::Simple' ) || print "Bail out!
 ";
 }
 
-diag( "Testing Lingua::EN::TitleCaps $Lingua::EN::TitleCaps::VERSION, Perl $], $^X" );
+diag( "Testing Lingua::EN::Titlecase::Simple $Lingua::EN::Titlecase::Simple::VERSION, Perl $], $^X" );
