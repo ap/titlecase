@@ -11,5 +11,5 @@ pm_to_blib*
 .lwpcookies
 cover_db
 pod2htm*.tmp
-Lingua-EN-TitleCaps-*
+Lingua-EN-Titlecase-Simple-*
 *.cache
