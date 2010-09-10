@@ -1,30 +1,28 @@
 NAME
-    Lingua::EN::TitleCaps - Automatically title-case headlines and
+    Lingua::EN::Titlecase::Simple - Automatically title-case headlines and
     title-texts.
 
 SYNOPSIS
-            # OO usage
-            use Lingua::EN::TitleCaps;
+            use Lingua::EN::Titlecase::Simple qw/titlecase/;
 
-            my $tc = Lingua::EN::TitleCaps->new();
-            print $tc->titlecase('Small word at end is nothing to be afraid of');
+            print titlecase('Small word at end is nothing to be afraid of');
                     # prints 'Small Word at End Is Nothing to Be Afraid Of'
-
-            # Non-OO usage
-            use Lingua::EN::TitleCaps qw/titlecase/;
         
             print titlecase('IF IT’S ALL CAPS, FIX IT');
                     # prints 'If It’s All Caps, Fix It'
 
+            # you can also batch-convert
+            my @converted = titlecase("FIX THIS", "Fix that now", "don't forget This");
+
 DESCRIPTION
-    This module provides a simple method for automatically title-case texts
+    This module provides a simple method for automatically titlecasing texts
     (generally headings and title texts) according to traditional editorial
     rules (it uses guidelines from "The New York Times Manual of Style").
 
-    While a module that provides such functionality already exists
-    (Lingua::EN::Titlecase), this module is much lighter weight and provides
-    a much simpler API, you are encouraged to check Lingua::EN::Titlecase
-    out and see which one is better for your needs.
+    While (Lingua::EN::Titlecase) already provides this functionality, this
+    implementation is much lighter weight and provides a much simpler API.
+    You are encouraged to check Lingua::EN::Titlecase out and see which one
+    is better for your needs.
 
     It should be noted that this module expects your input to be UTF-8, and
     you can rest assured your special UTF-8 characters will remain intact.
@@ -33,12 +31,9 @@ DESCRIPTION
     Gruber's Title Case script (see AUTHORS for links to original source
     code).
 
-METHODS
-  new()
-    Creates a new instance of this module.
-
-  titlecase( $text )
-    Returns a properly title-cased version of the provided text.
+FUNCTIONS
+  titlecase( $text | @texts )
+    Returns a properly title-cased version of the provided text(s).
 
 AUTHORS
     Aristotle Pagaltzis (<http://plasmasturm.org/code/titlecase/>), based on
@@ -47,34 +42,36 @@ AUTHORS
     Made into a CPAN distribution by Ido Perlmuter, "<ido at ido50.net>"
 
 BUGS
-    Please report any bugs or feature requests to "bug-lingua-en-titlecaps
-    at rt.cpan.org", or through the web interface at
-    <http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Lingua-EN-TitleCaps>. I
-    will be notified, and then you'll automatically be notified of progress
-    on your bug as I make changes.
+    Please report any bugs or feature requests to
+    "bug-lingua-en-titlecase-simple at rt.cpan.org", or through the web
+    interface at
+    <http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Lingua-EN-Titlecase-Simp
+    le>. I will be notified, and then you'll automatically be notified of
+    progress on your bug as I make changes.
 
 SUPPORT
     You can find documentation for this module with the perldoc command.
 
-            perldoc Lingua::EN::TitleCaps
+            perldoc Lingua::EN::Titlecase::Simple
 
     You can also look for information at:
 
     *   RT: CPAN's request tracker
 
-        <http://rt.cpan.org/NoAuth/Bugs.html?Dist=Lingua-EN-TitleCaps>
+        <http://rt.cpan.org/NoAuth/Bugs.html?Dist=Lingua-EN-Titlecase-Simple
+        >
 
     *   AnnoCPAN: Annotated CPAN documentation
 
-        <http://annocpan.org/dist/Lingua-EN-TitleCaps>
+        <http://annocpan.org/dist/Lingua-EN-Titlecase-Simple>
 
     *   CPAN Ratings
 
-        <http://cpanratings.perl.org/d/Lingua-EN-TitleCaps>
+        <http://cpanratings.perl.org/d/Lingua-EN-Titlecase-Simple>
 
     *   Search CPAN
 
-        <http://search.cpan.org/dist/Lingua-EN-TitleCaps/>
+        <http://search.cpan.org/dist/Lingua-EN-Titlecase-Simple/>
 
 LICENSE AND COPYRIGHT
             Copyright 2008-2010 John Gruber, Aristotle Pagaltzis, Ido Perlmuter.
