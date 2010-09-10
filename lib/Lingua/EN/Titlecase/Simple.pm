@@ -34,7 +34,7 @@ This module provides a simple method for automatically titlecasing texts
 (generally headings and title texts) according to traditional editorial
 rules (it uses guidelines from "The New York Times Manual of Style").
 
-While (L<Lingua::EN::Titlecase>) already provides this functionality,
+While L<Lingua::EN::Titlecase> already provides this functionality,
 this implementation is much lighter weight and provides a much simpler API.
 You are encouraged to check Lingua::EN::Titlecase out and see which one
 is better for your needs.
