@@ -38,6 +38,8 @@ while ( <> ) {
 
 	s{
 		\b (_*) (?:
+			( ([[:alpha:]]+ $apos /) ([[:alpha:]]+ $apos) ) # URL, domain, or email
+			|
 			( [-_[:alpha:]]+ [@.:/] [-_[:alpha:]@.:/]+ $apos ) # URL, domain, or email
 			|
 			( (?i: $small_re ) $apos )                         # or small word (case-insensitive)
@@ -48,11 +50,12 @@ while ( <> ) {
 		) (_*) \b
 	}{
 		$1 . (
-		  defined $2 ? $2         # preserve URL, domain, or email
-		: defined $3 ? "\L$3"     # lowercase small word
-		: defined $4 ? "\u\L$4"   # capitalize word w/o internal caps
-		: $5                      # preserve other kinds of word
-		) . $6
+		  defined $2 ? "\u$3\u$4"
+		: defined $5 ? $5         # preserve URL, domain, or email
+		: defined $6 ? "\L$6"     # lowercase small word
+		: defined $7 ? "\u\L$7"   # capitalize word w/o internal caps
+		: $8                      # preserve other kinds of word
+		) . $9
 	}exgo;
 
 
