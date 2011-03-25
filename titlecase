@@ -38,7 +38,7 @@ while ( <> ) {
 
 	s{
 		\b (_*) (?:
-			( ([[:alpha:]]+ $apos /) ([[:alpha:]]+ $apos) ) # URL, domain, or email
+			( ([[:alpha:]]+ $apos /) ([[:alpha:]]+ $apos) )    # slashed/words
 			|
 			( [-_[:alpha:]]+ [@.:/] [-_[:alpha:]@.:/]+ $apos ) # URL, domain, or email
 			|
@@ -50,7 +50,7 @@ while ( <> ) {
 		) (_*) \b
 	}{
 		$1 . (
-		  defined $2 ? "\u$3\u$4"
+		  defined $2 ? "\u$3\u$4" # slashed words
 		: defined $5 ? $5         # preserve URL, domain, or email
 		: defined $6 ? "\L$6"     # lowercase small word
 		: defined $7 ? "\u\L$7"   # capitalize word w/o internal caps
