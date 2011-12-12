@@ -38,7 +38,7 @@ while ( <> ) {
 
 	s{
 		\b (_*) (?:
-			( [-_[:alpha:]]+ [@.:/] [-_[:alpha:]@.:/]+ $apos ) # URL, domain, or email
+			( [-_[:alpha:]]+ [@.:] [-_[:alpha:]@.:/]+ $apos )  # URL, domain, or email
 			|
 			( (?i: $small_re ) $apos )                         # or small word (case-insensitive)
 			|
