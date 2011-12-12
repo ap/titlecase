@@ -148,3 +148,6 @@ If It’s All Caps, Fix It
 
 What could/should be done about slashes?
 What Could/Should Be Done About Slashes?
+
+Never touch paths like /var/run before/after /boot
+Never Touch Paths Like /var/run Before/After /boot
