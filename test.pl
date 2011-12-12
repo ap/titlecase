@@ -145,3 +145,6 @@ This Is Trimming
 
 IF IT’S ALL CAPS, FIX IT
 If It’s All Caps, Fix It
+
+red blue/green purple
+Red Blue/Green Purple
