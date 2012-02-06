@@ -26,6 +26,10 @@ use warnings;
 use utf8;
 use open qw( :encoding(UTF-8) :std );
 
+my $opt_force = @ARGV && '-f' eq $ARGV[0];
+shift @ARGV if $opt_force;
+shift @ARGV if @ARGV && '--' eq $ARGV[0];
+
 my @small_words = qw( (?<!q&)a an and as at(?!&t) but by en for if in of on or the to v[.]? via vs[.]? );
 my $small_re = join '|', @small_words;
 
@@ -34,7 +38,7 @@ my $apos = qr/ (?: ['’] [[:lower:]]* )? /x;
 while ( <> ) {
 	s{\A\s+}{}, s{\s+\z}{};
 
-	$_ = lc $_ if not /[[:lower:]]/;
+	$_ = lc $_ if $opt_force or not /[[:lower:]]/;
 
 	s{
 		\b (_*) (?:
