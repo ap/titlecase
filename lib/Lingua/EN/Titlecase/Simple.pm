@@ -12,13 +12,9 @@ my $small_re = join '|', @small_words;
 my $apos = qr/ (?: ['’] [[:lower:]]* )? /x;
 
 sub titlecase {
-	my @titles = @_;
+	my @str = @_ or return;
 
-	return unless scalar @titles;
-
-	my @conversions;
-
-	foreach (@titles) {
+	for ( @str ) {
 		s{\A\s+}{}, s{\s+\z}{};
 
 		$_ = lc $_ unless /[[:lower:]]/;
@@ -55,15 +51,9 @@ sub titlecase {
 		(?= [[:punct:]]* \Z # ... at the end of the title...
 		| ['"’”)\]] [ ] ) # ... or of an inserted subphrase?
 		}{\u\L$1}xigo;
-		
-		push(@conversions, $_);
 	}
 
-	if (scalar @conversions > 1) {
-		return wantarray ? @conversions : \@conversions;
-	} else {
-		return wantarray ? @conversions : $conversions[0];
-	}
+	wantarray ? @str : ( @str > 1 ) ? \@str : $str[0];
 }
 
 1;

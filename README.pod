@@ -63,15 +63,11 @@ John Gruber <http://daringfireball.net/2008/05/title_case>
 
 Aristotle Pagaltzis <pagaltzis@gmx.de>
 
-=item *
-
-Ido Perlmuter <ido@ido50.net>
-
 =back
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2008 by John Gruber, Aristotle Pagaltzis, Ido Perlmuter.
+This software is Copyright (c) 2008 by John Gruber, Aristotle Pagaltzis.
 
 This is free software, licensed under:
 
