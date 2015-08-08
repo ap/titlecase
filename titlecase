@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-use strict; use warnings; use utf8;
+use 5.010; use strict; use warnings; use utf8;
 
 package Lingua::EN::Titlecase::Simple;
 
@@ -7,10 +7,8 @@ package Lingua::EN::Titlecase::Simple;
 
 eval "use Exporter::Tidy all => [ 'titlecase' ]" if defined caller;
 
-my @small_words = qw( (?<!q&)a an and as at(?!&t) but by en for if in of on or the to v[.]? via vs[.]? );
-my $small_re = join '|', @small_words;
-
-my $apos = qr/ (?: ['’] [[:lower:]]* )? /x;
+our @SMALL_WORD
+	= qw/ (?<!q&)a an and as at(?!&t) but by en for if in of on or the to v[.]? via vs[.]? /;
 
 sub titlecase {
 	my @str = @_ or return;
@@ -19,6 +17,9 @@ sub titlecase {
 		s{\A\s+}{}, s{\s+\z}{};
 
 		$_ = lc $_ unless /[[:lower:]]/;
+
+		state $apos = q/ (?: ['’] [[:lower:]]* )? /;
+		state $small_re = join '|', @SMALL_WORD;
 
 		s{
 			\b (_*) (?:
