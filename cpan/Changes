@@ -1,5 +1,8 @@
 Release history for Lingua-EN-Titlecase-Simple
 
+1.001 Sat 08 Aug 2015
+	- Correct dependency metadata
+
 1.000 Sat 08 Aug 2015
 	- Proper capitalization for slashed/joined words
 	- Unix path case preservation

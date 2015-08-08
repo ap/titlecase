@@ -8,7 +8,7 @@ Lingua::EN::Titlecase::Simple - John Gruber's headline capitalization script
 
 =head1 VERSION
 
-version 1.000
+version 1.001
 
 =head1 SYNOPSIS
 
