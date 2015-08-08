@@ -21,39 +21,43 @@
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 # }}}
 
-use strict;
-use warnings;
-use open qw( :encoding(UTF-8) :std );
+use strict; use warnings;
 
 use Test::More;
-use IPC::Open2;
+use IPC::Open2 'open2';
+use Data::Dumper 'Dumper';
+use constant TEXTMODE => ':encoding(UTF-8)';
 
-use constant INPUT  => 0;
-use constant OUTPUT => 1;
+sub pp { s/\A\$VAR1 = //, s/;\s*\z//, return $_ for Dumper $_[0]; }
+
+sub titlecase {
+	open2( my $cout, my $cin, @ARGV ) or die "Couldn't execute @ARGV\: $!\n";
+	binmode $_, TEXTMODE for $cin, $cout;
+
+	print { $cin } join "\n", @_;
+	close $cin or die $!;
+
+	chomp( my @result = readline $cout );
+	close $cout or die $!;
+
+	@result;
+};
 
 @ARGV or die "usage: $0 someprogram [programoptions ...]\n\n";
+
+binmode DATA, TEXTMODE;
 
 my @testcase =
 	map [ split /\n/ ],
 	do { local $/ = ""; <DATA> }; # $/ = "" is paragraph mode
 
-plan tests => 0 + @testcase;
+plan tests => 0+@testcase;
 
-open2( my $cout, my $cin, @ARGV )
-	or die "Couldn't execute @ARGV\: $!\n";
+my @result = titlecase( map $_->[0], @testcase );
 
 for ( @testcase ) {
-	print { $cin } $_->[ INPUT ], "\n";
-}
-
-close $cin;
-
-chomp( my @result = <$cout> );
-
-close $cout;
-
-for my $i ( 0 .. $#result ) {
-	is( $result[ $i ], $testcase[ $i ][ OUTPUT ] );
+	my ( $input, $expect ) = @$_;
+	is shift @result, $expect, pp $input;
 }
 
 # vim: ts=4 sts=4 sw=4 sr fdm=marker

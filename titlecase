@@ -21,62 +21,65 @@
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 # }}}
 
-use strict;
-use warnings;
-use utf8;
-use open qw( :encoding(UTF-8) :std );
-
-my $opt_force = @ARGV && '-f' eq $ARGV[0];
-shift @ARGV if $opt_force;
-shift @ARGV if @ARGV && '--' eq $ARGV[0];
+use strict; use warnings; use utf8;
 
 my @small_words = qw( (?<!q&)a an and as at(?!&t) but by en for if in of on or the to v[.]? via vs[.]? );
 my $small_re = join '|', @small_words;
 
 my $apos = qr/ (?: ['’] [[:lower:]]* )? /x;
 
-while ( <> ) {
-	s{\A\s+}{}, s{\s+\z}{};
+sub titlecase {
+	my @str = @_ or return;
 
-	$_ = lc $_ if $opt_force or not /[[:lower:]]/;
+	for ( @str ) {
+		s{\A\s+}{}, s{\s+\z}{};
 
-	s{
-		\b (_*) (?:
-			( (?<=[ ][/\\]) [[:alpha:]]+ [-_[:alpha:]/\\]+ |   # file path or
-			  [-_[:alpha:]]+ [@.:] [-_[:alpha:]@.:/]+ $apos )  # URL, domain, or email
-			|
-			( (?i: $small_re ) $apos )                         # or small word (case-insensitive)
-			|
-			( [[:alpha:]] [[:lower:]'’()\[\]{}]* $apos )       # or word w/o internal caps
-			|
-			( [[:alpha:]] [[:alpha:]'’()\[\]{}]* $apos )       # or some other word
-		) (_*) \b
-	}{
-		$1 . (
-		  defined $2 ? $2         # preserve URL, domain, or email
-		: defined $3 ? "\L$3"     # lowercase small word
-		: defined $4 ? "\u\L$4"   # capitalize word w/o internal caps
-		: $5                      # preserve other kinds of word
-		) . $6
-	}exgo;
+		$_ = lc $_ unless /[[:lower:]]/;
 
-
-	# exceptions for small words: capitalize at start and end of title
-	s{
-		(  \A [[:punct:]]*         # start of title...
-		|  [:.;?!][ ]+             # or of subsentence...
-		|  [ ]['"“‘(\[][ ]*     )  # or of inserted subphrase...
-		( $small_re ) \b           # ... followed by small word
-	}{$1\u\L$2}xigo;
-
-	s{
-		\b ( $small_re )      # small word...
-		(?= [[:punct:]]* \Z   # ... at the end of the title...
-		|   ['"’”)\]] [ ] )   # ... or of an inserted subphrase?
-	}{\u\L$1}xigo;
+		s{
+			\b (_*) (?:
+				( (?<=[ ][/\\]) [[:alpha:]]+ [-_[:alpha:]/\\]+ |   # file path or
+				[-_[:alpha:]]+ [@.:] [-_[:alpha:]@.:/]+ $apos )  # URL, domain, or email
+				|
+				( (?i: $small_re ) $apos )                         # or small word (case-insensitive)
+				|
+				( [[:alpha:]] [[:lower:]'’()\[\]{}]* $apos )       # or word w/o internal caps
+				|
+				( [[:alpha:]] [[:alpha:]'’()\[\]{}]* $apos )       # or some other word
+			) (_*) \b
+		}{
+			$1 . (
+			defined $2 ? $2         # preserve URL, domain, or email
+			: defined $3 ? "\L$3"     # lowercase small word
+			: defined $4 ? "\u\L$4"   # capitalize word w/o internal caps
+			: $5                      # preserve other kinds of word
+			) . $6
+		}exgo;
 
 
-	print $_, "\n";
+		# exceptions for small words: capitalize at start and end of title
+		s{
+			(  \A [[:punct:]]*         # start of title...
+			|  [:.;?!][ ]+             # or of subsentence...
+			|  [ ]['"“‘(\[][ ]*     )  # or of inserted subphrase...
+			( $small_re ) \b           # ... followed by small word
+		}{$1\u\L$2}xigo;
+
+		s{
+			\b ( $small_re )      # small word...
+			(?= [[:punct:]]* \Z   # ... at the end of the title...
+			|   ['"’”)\]] [ ] )   # ... or of an inserted subphrase?
+		}{\u\L$1}xigo;
+
+	}
+
+	wantarray ? @str : ( @str > 1 ) ? \@str : $str[0];
 }
+
+use open qw( :encoding(UTF-8) :std );
+my $opt_force = @ARGV && '-f' eq $ARGV[0];
+shift @ARGV if $opt_force;
+shift @ARGV if @ARGV && '--' eq $ARGV[0];
+print titlecase( $opt_force ? lc : $_ ), "\n" while readline;
 
 # vim: ts=4 sts=4 sw=4 sr fdm=marker
