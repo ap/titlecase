@@ -1,10 +1,11 @@
+#!/usr/bin/perl
 use strict; use warnings; use utf8;
 
 package Lingua::EN::Titlecase::Simple;
 
 # ABSTRACT: John Gruber's headline capitalization script
 
-use Exporter::Tidy all => [ 'titlecase' ];
+eval "use Exporter::Tidy all => [ 'titlecase' ]" if defined caller;
 
 my @small_words = qw( (?<!q&)a an and as at(?!&t) but by en for if in of on or the to v[.]? via vs[.]? );
 my $small_re = join '|', @small_words;
@@ -56,4 +57,10 @@ sub titlecase {
 	wantarray ? @str : ( @str > 1 ) ? \@str : $str[0];
 }
 
-1;
+return 1 if defined caller;
+
+eval 'use open qw( :encoding(UTF-8) :std )';
+my $opt_force = @ARGV && '-f' eq $ARGV[0];
+shift @ARGV if $opt_force;
+shift @ARGV if @ARGV && '--' eq $ARGV[0];
+print titlecase( $opt_force ? lc : $_ ), "\n" while readline;

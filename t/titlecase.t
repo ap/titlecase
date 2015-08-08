@@ -1,11 +1,26 @@
+#!/usr/bin/perl
 use strict; use warnings;
 
 use Test::More;
-use Lingua::EN::Titlecase::Simple 'titlecase';
+use if @ARGV != 0, 'IPC::Open2' => 'open2';
+use if @ARGV == 0, 'Lingua::EN::Titlecase::Simple' => 'titlecase';
 use Data::Dumper 'Dumper';
 use constant TEXTMODE => ':encoding(UTF-8)';
 
 sub pp { s/\A\$VAR1 = //, s/;\s*\z//, return $_ for Dumper $_[0]; }
+
+defined &titlecase or *titlecase = sub {
+	open2( my $cout, my $cin, @ARGV ) or die "Couldn't execute @ARGV\: $!\n";
+	binmode $_, TEXTMODE for $cin, $cout;
+
+	print { $cin } join "\n", @_;
+	close $cin or die $!;
+
+	chomp( my @result = readline $cout );
+	close $cout or die $!;
+
+	@result;
+};
 
 binmode DATA, TEXTMODE;
 
