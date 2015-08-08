@@ -8,7 +8,7 @@ Lingua::EN::Titlecase::Simple - John Gruber's headline capitalization script
 
 =head1 VERSION
 
-version 0.1
+version 1.000
 
 =head1 SYNOPSIS
 
@@ -73,7 +73,7 @@ Aristotle Pagaltzis <pagaltzis@gmx.de>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2008 by John Gruber, Aristotle Pagaltzis.
+This software is Copyright (c) 2015 by John Gruber, Aristotle Pagaltzis.
 
 This is free software, licensed under:
 
