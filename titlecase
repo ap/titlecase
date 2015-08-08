@@ -22,32 +22,31 @@ sub titlecase {
 		state $small_re = join '|', @SMALL_WORD;
 
 		s{
-			\b (_*) (?:
+			\b _*\K (?:
 				( (?<=[ ][/\\]) [[:alpha:]]+ [-_[:alpha:]/\\]+ |   # file path or
-				[-_[:alpha:]]+ [@.:] [-_[:alpha:]@.:/]+ $apos )  # URL, domain, or email
+				[-_[:alpha:]]+ [@.:] [-_[:alpha:]@.:/]+ $apos )    # URL, domain, or email
 				|
-				( (?i: $small_re ) $apos )                         # or small word (case-insensitive)
+				( (?i) $small_re $apos )                           # or small word (case-insensitive)
 				|
 				( [[:alpha:]] [[:lower:]'’()\[\]{}]* $apos )       # or word w/o internal caps
 				|
 				( [[:alpha:]] [[:alpha:]'’()\[\]{}]* $apos )       # or some other word
-			) (_*) \b
+			) (?= _* \b )
 		}{
-			$1 . (
-			defined $2 ? $2         # preserve URL, domain, or email
-			: defined $3 ? "\L$3"     # lowercase small word
-			: defined $4 ? "\u\L$4"   # capitalize word w/o internal caps
-			: $5                      # preserve other kinds of word
-			) . $6
+			; defined $1 ? $1         # preserve URL, domain, or email
+			: defined $2 ? lc $2      # lowercase small word
+			: defined $3 ? ucfirst $3 # capitalize lower-case word
+			: $4                      # preserve other kinds of word
 		}exgo;
 
 		# exceptions for small words: capitalize at start and end of title
 		s{
-			(  \A [[:punct:]]*         # start of title...
+			(?: \A [[:punct:]]*        # start of title...
 			|  [:.;?!][ ]+             # or of subsentence...
 			|  [ ]['"“‘(\[][ ]*     )  # or of inserted subphrase...
+			\K
 			( $small_re ) \b           # ... followed by small word
-		}{$1\u\L$2}xigo;
+		}{\u\L$1}xigo;
 
 		s{
 			\b ( $small_re )      # small word...
