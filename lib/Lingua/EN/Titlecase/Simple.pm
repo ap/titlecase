@@ -1,13 +1,11 @@
+use strict; use warnings; use utf8;
+
 package Lingua::EN::Titlecase::Simple;
 
 BEGIN {
 	use Exporter 'import';
 	@EXPORT_OK = qw/titlecase/;
 }
-
-use warnings;
-use strict;
-use utf8;
 
 # ABSTRACT: John Gruber's headline capitalization script
 
