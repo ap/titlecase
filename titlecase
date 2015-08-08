@@ -1,27 +1,11 @@
 #!/usr/bin/perl
-# Copyright (c) 2008, John Gruber, Aristotle Pagaltzis {{{
-#
-# Permission is hereby granted, free of charge, to any person obtaining
-# a copy of this software and associated documentation files (the
-# "Software"), to deal in the Software without restriction, including
-# without limitation the rights to use, copy, modify, merge, publish,
-# distribute, sublicense, and/or sell copies of the Software, and to
-# permit persons to whom the Software is furnished to do so, subject to
-# the following conditions:
-#
-# The above copyright notice and this permission notice shall be
-# included in all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-# CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-# TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-# SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-# }}}
-
 use strict; use warnings; use utf8;
+
+package Lingua::EN::Titlecase::Simple;
+
+# ABSTRACT: John Gruber's headline capitalization script
+
+eval "use Exporter::Tidy all => [ 'titlecase' ]" if defined caller;
 
 my @small_words = qw( (?<!q&)a an and as at(?!&t) but by en for if in of on or the to v[.]? via vs[.]? );
 my $small_re = join '|', @small_words;
@@ -56,7 +40,6 @@ sub titlecase {
 			) . $6
 		}exgo;
 
-
 		# exceptions for small words: capitalize at start and end of title
 		s{
 			(  \A [[:punct:]]*         # start of title...
@@ -70,16 +53,15 @@ sub titlecase {
 			(?= [[:punct:]]* \Z   # ... at the end of the title...
 			|   ['"’”)\]] [ ] )   # ... or of an inserted subphrase?
 		}{\u\L$1}xigo;
-
 	}
 
 	wantarray ? @str : ( @str > 1 ) ? \@str : $str[0];
 }
 
-use open qw( :encoding(UTF-8) :std );
+return 1 if defined caller;
+
+eval 'use open qw( :encoding(UTF-8) :std )';
 my $opt_force = @ARGV && '-f' eq $ARGV[0];
 shift @ARGV if $opt_force;
 shift @ARGV if @ARGV && '--' eq $ARGV[0];
 print titlecase( $opt_force ? lc : $_ ), "\n" while readline;
-
-# vim: ts=4 sts=4 sw=4 sr fdm=marker
