@@ -6,15 +6,15 @@ package Lingua::EN::Titlecase::Simple;
 
 use Exporter::Tidy all => [ 'titlecase' ];
 
+my @small_words = qw( (?<!q&)a an and as at(?!&t) but by en for if in of on or the to v[.]? via vs[.]? );
+my $small_re = join '|', @small_words;
+
+my $apos = qr/ (?: ['’] [[:lower:]]* )? /x;
+
 sub titlecase {
 	my @titles = @_;
 
 	return unless scalar @titles;
-
-	my @small_words = qw( (?<!q&)a an and as at(?!&t) but by en for if in of on or the to v[.]? via vs[.]? );
-	my $small_re = join '|', @small_words;
-
-	my $apos = qr/ (?: ['’] [[:lower:]]* )? /x;
 
 	my @conversions;
 
