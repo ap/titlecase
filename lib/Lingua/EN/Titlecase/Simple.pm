@@ -2,12 +2,9 @@ use strict; use warnings; use utf8;
 
 package Lingua::EN::Titlecase::Simple;
 
-BEGIN {
-	use Exporter 'import';
-	@EXPORT_OK = qw/titlecase/;
-}
-
 # ABSTRACT: John Gruber's headline capitalization script
+
+use Exporter::Tidy all => [ 'titlecase' ];
 
 sub titlecase {
 	my @titles = @_;
