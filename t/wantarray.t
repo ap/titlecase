@@ -1,6 +1,6 @@
-#!perl -T
+use strict; use warnings;
 
-use Test::More tests => 3;
+use Test::More 0.88; # for done_testing
 use Lingua::EN::Titlecase::Simple qw/titlecase/;
 use open qw/:encoding(UTF-8)/;
 use utf8;
@@ -17,4 +17,4 @@ is_deeply($conv, ['Save Room for Cheese-Cake', 'Who Put the Bump in the Bump-Sho
 
 is_deeply(\@conv, ['Hey Hey, My My'], 'Wanted array for just one text, received array');
 
-done_testing();
+done_testing;

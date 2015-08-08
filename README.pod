@@ -1,0 +1,80 @@
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Lingua::EN::Titlecase::Simple - John Gruber's headline capitalization script
+
+=head1 VERSION
+
+version 0.1
+
+=head1 SYNOPSIS
+
+ use Lingua::EN::Titlecase::Simple 'titlecase';
+
+ print titlecase 'Small word at end is nothing to be afraid of';
+ # output:        Small Word at End Is Nothing to Be Afraid Of
+
+ print titlecase 'IF IT’S ALL CAPS, FIX IT';
+ # output:        If It’s All Caps, Fix It
+
+=head1 DESCRIPTION
+
+This module capitalizes English text suitably for use as a headline, based on
+traditional editorial rules from I<The New York Times Manual of Style>.
+
+=head1 INTERFACE
+
+There are no default exports.
+
+=head2 C<titlecase>
+
+Takes one or more strings as arguments, each representing one headline to capitalize.
+
+When given a single string, returns a scalar.
+When given several strings, returns a list in list context, but an arrayref in scalar context.
+When given nothing, returns nothing in list context or undef in scalar context.
+
+This function can be exported on request.
+
+Note that the arrayref return is problematic because it depends on the number
+of arguments. If you have a variable number of arguments to pass, and that
+number can sometimes be less than 2, you will sometimes get a plain scalar or
+an undefined value instead of the arrayref you expected. Passing multiple
+strings in scalar context is therefore L<discouraged|perlpolicy/discouraged>.
+
+=head1 SEE ALSO
+
+L<Lingua::EN::Titlecase> provides a much more heavyweight, modular solution
+for the same problem. If you seriously disagree with the style rules in this
+module somewhere, you may be happier with that one.
+
+=head1 AUTHORS
+
+=over 4
+
+=item *
+
+John Gruber <http://daringfireball.net/2008/05/title_case>
+
+=item *
+
+Aristotle Pagaltzis <pagaltzis@gmx.de>
+
+=item *
+
+Ido Perlmuter <ido@ido50.net>
+
+=back
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2008 by John Gruber, Aristotle Pagaltzis, Ido Perlmuter.
+
+This is free software, licensed under:
+
+  The MIT (X11) License
+
+=cut

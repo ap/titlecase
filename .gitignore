@@ -1,15 +1,2 @@
-blib/*
-inc/*
-Makefile
-Makefile.old
-pm_to_blib
-Build
-Build.bat
-_build*
-pm_to_blib*
-*.tar.gz
-.lwpcookies
-cover_db
-pod2htm*.tmp
-Lingua-EN-Titlecase-Simple-*
-*.cache
+/Lingua-EN-Titlecase-Simple-*
+/.build

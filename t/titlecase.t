@@ -1,4 +1,4 @@
-#!perl -T
+use strict; use warnings;
 
 use Test::More;
 use Lingua::EN::Titlecase::Simple qw/titlecase/;
@@ -29,5 +29,3 @@ plan tests => scalar @tests;
 foreach (@tests) {
 	is(titlecase($_->[0]), $_->[1], 'ok');
 }
-
-done_testing();
