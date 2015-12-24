@@ -1,0 +1,16 @@
+requires 'perl', '5.010';
+requires 'strict';
+requires 'warnings';
+requires 'utf8';
+
+requires 'Exporter::Tidy';
+
+on test => sub {
+	requires 'Data::Dumper';
+	requires 'Test::More', '0.88';
+	requires 'constant';
+	requires 'if';
+	requires 'open';
+};
+
+# vim: ft=perl
