@@ -12,6 +12,8 @@ eval __HERE__."use Exporter::Tidy all => [ 'titlecase' ]; 1" or die $@ if define
 our @SMALL_WORD
 	= qw/ (?<!q&)a an and as at(?!&t) but by en for if in of on or the to v[.]? via vs[.]? /;
 
+my $apos = q/ (?: ['’] [[:lower:]]* )? /;
+
 sub titlecase {
 	my @str = @_ or return;
 
@@ -20,15 +22,12 @@ sub titlecase {
 
 		$_ = lc $_ unless /[[:lower:]]/;
 
-		state $apos = q/ (?: ['’] [[:lower:]]* )? /;
-		state $small_re = join '|', @SMALL_WORD;
-
 		s{
 			\b _*\K (?:
 				( (?<=[ ][/\\]) [[:alpha:]]+ [-_[:alpha:]/\\]+ |   # file path or
 				[-_[:alpha:]]+ [@.:] [-_[:alpha:]@.:/]+ $apos )    # URL, domain, or email
 				|
-				( (?i) $small_re $apos )                           # or small word (case-insensitive)
+				( (?i) ${\join '|', @SMALL_WORD} $apos )           # or small word (case-insensitive)
 				|
 				( [[:alpha:]] [[:lower:]'’()\[\]{}]* $apos )       # or word w/o internal caps
 				|
@@ -47,11 +46,11 @@ sub titlecase {
 			|  [:.;?!][ ]+             # or of subsentence...
 			|  [ ]['"“‘(\[][ ]*     )  # or of inserted subphrase...
 			\K
-			( $small_re ) \b           # ... followed by small word
+			( ${\join '|', @SMALL_WORD} ) \b  # ... followed by small word
 		}{\u\L$1}xigo;
 
 		s{
-			\b ( $small_re )      # small word...
+			\b ( ${\join '|', @SMALL_WORD} )  # small word...
 			(?= [[:punct:]]* \Z   # ... at the end of the title...
 			|   ['"’”)\]] [ ] )   # ... or of an inserted subphrase?
 		}{\u\L$1}xigo;
