@@ -1,6 +1,8 @@
 # PODNAME: Lingua::EN::Titlecase::Simple
 # ABSTRACT: John Gruber's headline capitalization script
 
+=encoding utf8
+
 =head1 SYNOPSIS
 
  use Lingua::EN::Titlecase::Simple 'titlecase';
