@@ -126,6 +126,9 @@ This Is Trimming
 IF IT’S ALL CAPS, FIX IT
 If It’s All Caps, Fix It
 
+___if emphasized, keep that way___
+___If Emphasized, Keep That Way___
+
 What could/should be done about slashes?
 What Could/Should Be Done About Slashes?
 
