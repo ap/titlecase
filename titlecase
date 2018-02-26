@@ -5,7 +5,9 @@ package Lingua::EN::Titlecase::Simple;
 
 # ABSTRACT: John Gruber's headline capitalization script
 
-eval "use Exporter::Tidy all => [ 'titlecase' ]" if defined caller;
+sub __HERE__ () { sprintf "\n#line %d %s\n", (caller)[2,1] }
+
+eval __HERE__."use Exporter::Tidy all => [ 'titlecase' ]; 1" or die $@ if defined caller;
 
 our @SMALL_WORD
 	= qw/ (?<!q&)a an and as at(?!&t) but by en for if in of on or the to v[.]? via vs[.]? /;
@@ -60,7 +62,7 @@ sub titlecase {
 
 return 1 if defined caller;
 
-eval 'use open qw( :encoding(UTF-8) :std )';
+eval __HERE__.'use open qw( :encoding(UTF-8) :std ); 1' or die $@;
 my $opt_force = @ARGV && '-f' eq $ARGV[0];
 shift @ARGV if $opt_force;
 shift @ARGV if @ARGV && '--' eq $ARGV[0];
