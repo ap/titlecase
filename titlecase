@@ -23,7 +23,7 @@ sub titlecase {
 		$_ = lc $_ unless /[[:lower:]]/;
 
 		s{
-			\b _*\K (?:
+			\b (_*) (?:
 				( (?<=[ ][/\\]) [[:alpha:]]+ [-_[:alpha:]/\\]+ |   # file path or
 				[-_[:alpha:]]+ [@.:] [-_[:alpha:]@.:/]+ $apos )    # URL, domain, or email
 				|
@@ -34,20 +34,20 @@ sub titlecase {
 				( [[:alpha:]] [[:alpha:]'’()\[\]{}]* $apos )       # or some other word
 			) (?= _* \b )
 		}{
-			; defined $1 ? $1         # preserve URL, domain, or email
-			: defined $2 ? lc $2      # lowercase small word
-			: defined $3 ? ucfirst $3 # capitalize lower-case word
-			: $4                      # preserve other kinds of word
+			$1 .
+			( defined $2 ? $2         # preserve URL, domain, or email
+			: defined $3 ? lc $3      # lowercase small word
+			: defined $4 ? ucfirst $4 # capitalize lower-case word
+			: $5 )                    # preserve other kinds of word
 		}exgo;
 
 		# exceptions for small words: capitalize at start and end of title
 		s{
-			(?: \A [[:punct:]]*        # start of title...
+			( \A [[:punct:]]*          # start of title...
 			|  [:.;?!][ ]+             # or of subsentence...
 			|  [ ]['"“‘(\[][ ]*     )  # or of inserted subphrase...
-			\K
 			( ${\join '|', @SMALL_WORD} ) \b  # ... followed by small word
-		}{\u\L$1}xigo;
+		}{$1\u\L$2}xigo;
 
 		s{
 			\b ( ${\join '|', @SMALL_WORD} )  # small word...
