@@ -7,7 +7,7 @@ requires 'Exporter::Tidy';
 
 on test => sub {
 	requires 'Data::Dumper';
-	requires 'Test::More', '0.88';
+	requires 'Test::More';
 	requires 'constant';
 	requires 'if';
 	requires 'open';
