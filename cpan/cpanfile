@@ -3,8 +3,6 @@ requires 'strict';
 requires 'warnings';
 requires 'utf8';
 
-requires 'Exporter::Tidy';
-
 on test => sub {
 	requires 'Data::Dumper';
 	requires 'Test::More';
