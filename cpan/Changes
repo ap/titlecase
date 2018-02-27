@@ -1,5 +1,8 @@
 Release history for Lingua-EN-Titlecase-Simple
 
+1.003 Tue 27 Feb 2018
+	- Removal of Exporter::Tidy dependency
+
 1.002 Mon 26 Feb 2018
 	- Perl 5.8.1 support
 	- Packaging cleanups
