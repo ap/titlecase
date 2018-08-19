@@ -134,3 +134,6 @@ What Could/Should Be Done About Slashes?
 
 Never touch paths like /var/run before/after /boot
 Never Touch Paths Like /var/run Before/After /boot
+
+There are 100's of buyer's guides
+There Are 100's of Buyer's Guides

@@ -21,7 +21,8 @@ sub titlecase {
 		s{
 			\b (_*) (?:
 				( (?<=[ ][/\\]) [[:alpha:]]+ [-_[:alpha:]/\\]+ |   # file path or
-				[-_[:alpha:]]+ [@.:] [-_[:alpha:]@.:/]+ $apos )    # URL, domain, or email
+				[-_[:alpha:]]+ [@.:] [-_[:alpha:]@.:/]+ $apos |    # URL, domain, or email or
+				[0-9] [0-9,._ ]+ $apos )                           # a numeric literal
 				|
 				( (?i) ${\join '|', @SMALL_WORD} $apos )           # or small word (case-insensitive)
 				|
