@@ -1,7 +1,8 @@
-# PODNAME: Lingua::EN::Titlecase::Simple
-# ABSTRACT: John Gruber's headline capitalization script
+=encoding UTF-8
 
-=encoding utf8
+=head1 NAME
+
+Lingua::EN::Titlecase::Simple - John Gruber's headline capitalization script
 
 =head1 SYNOPSIS
 
@@ -49,3 +50,5 @@ Any changes after that will have no effect.
 L<Lingua::EN::Titlecase> provides a much more heavyweight, modular solution
 for the same problem. If you seriously disagree with the style rules in this
 module somewhere, you may be happier with that one.
+
+=cut

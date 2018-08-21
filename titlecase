@@ -3,7 +3,7 @@ use 5.008001; use strict; use warnings; use utf8;
 
 package Lingua::EN::Titlecase::Simple;
 
-# ABSTRACT: John Gruber's headline capitalization script
+our $VERSION = '1.003';
 
 our @SMALL_WORD
 	= qw/ (?<!q&)a an and as at(?!&t) but by en for if in of on or the to v[.]? via vs[.]? /;
