@@ -1,5 +1,9 @@
 Release history for Lingua-EN-Titlecase-Simple
 
+1.004 Tue 21 Aug 2018
+	- Fix for “100's” capitalisation
+	- Cover script for command line use
+
 1.003 Tue 27 Feb 2018
 	- Removal of Exporter::Tidy dependency
 

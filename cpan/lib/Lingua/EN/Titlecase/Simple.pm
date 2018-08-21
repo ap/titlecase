@@ -2,7 +2,7 @@ use 5.008001; use strict; use warnings; use utf8;
 
 package Lingua::EN::Titlecase::Simple;
 
-our $VERSION = '1.003';
+our $VERSION = '1.004';
 
 BEGIN { # FIXUP: this stuff is here to allow `prove` to Just Work during development
 	my $fn = '../titlecase';
