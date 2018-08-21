@@ -23,7 +23,14 @@ $file{'LICENSE'} = $license->fulltext;
 
 $file{ $_ } = do { local $/; slurp $_ } for
 	my $podfn = 'lib/Lingua/EN/Titlecase/Simple.pod',
+	my $libfn = 'lib/Lingua/EN/Titlecase/Simple.pm',
+	my $binfn = 'bin/titlecase',
 	;
+
+$file{ $binfn } =~ s!(?<=\n\n)(.*)(?=\n\nuse open )!use Lingua::EN::Titlecase::Simple;!s or die "Couldn't fixup $binfn\n";
+my $body = $1;
+
+$file{ $libfn } =~ s!.*BEGIN.*FIXUP(?s:.*?)END.*FIXUP.*!$body!e or die "Couldn't fixup $libfn\n";
 
 $file{ $podfn } =~ s{(?=^\n=cut\s*\z)}{
 	"\n=head1 AUTHORS\n\n=over 4\n\n" . ( join '', map "=item *\n\n$_\n\n", $meta->authors ) . "=back\n\n"
@@ -43,3 +50,5 @@ for my $fn ( sort keys %file ) {
 	print $fh $file{ $fn };
 	close $fh or die "Couldn't close $fn after writing: $!\n";
 }
+
+chmod 0755, $binfn or die "Couldn't chmod +x $binfn: $!\n";

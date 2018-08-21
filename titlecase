@@ -1,10 +1,6 @@
 #!/usr/bin/perl
 use 5.008001; use strict; use warnings; use utf8;
 
-package Lingua::EN::Titlecase::Simple;
-
-our $VERSION = '1.003';
-
 our @SMALL_WORD
 	= qw/ (?<!q&)a an and as at(?!&t) but by en for if in of on or the to v[.]? via vs[.]? /;
 
@@ -56,17 +52,12 @@ sub titlecase {
 	wantarray ? @str : ( @str > 1 ) ? \@str : $str[0];
 }
 
-sub import {
-	my ( $class, $pkg, $file, $line ) = ( shift, caller );
-	die "Unknown symbol: $_ at $file line $line.\n" for grep 'titlecase' ne $_, @_;
-	no strict 'refs';
-	*{ $pkg . '::titlecase' } = \&titlecase if @_;
+use open qw( :encoding(UTF-8) :std );
+use Getopt::Std 'getopts';
+
+getopts 'f', \my %opt;
+
+while ( readline ) {
+	$_ = lc if $opt{'f'};
+	print titlecase( $_ ), "\n";
 }
-
-return 1 if defined caller;
-
-eval 'use open qw( :encoding(UTF-8) :std ); 1' or die;
-my $opt_force = @ARGV && '-f' eq $ARGV[0];
-shift @ARGV if $opt_force;
-shift @ARGV if @ARGV && '--' eq $ARGV[0];
-print titlecase( $opt_force ? lc : $_ ), "\n" while readline;

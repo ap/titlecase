@@ -36,7 +36,7 @@ my %META = (
 	},
 );
 
-my %MM_ARGS;
+my %MM_ARGS = ( EXE_FILES => [ 'bin/titlecase' ] );
 
 sub MY::postamble { <<'' }
 create_distdir : MANIFEST
