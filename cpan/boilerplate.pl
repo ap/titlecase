@@ -22,7 +22,6 @@ my $license = do {
 $file{'LICENSE'} = $license->fulltext;
 
 $file{ $_ } = do { local $/; slurp $_ } for
-	my $podfn = 'lib/Lingua/EN/Titlecase/Simple.pod',
 	my $libfn = 'lib/Lingua/EN/Titlecase/Simple.pm',
 	my $binfn = 'bin/titlecase',
 	;
@@ -31,14 +30,13 @@ $file{ $binfn } =~ s!(?<=\n\n)(.*)(?=\n\nuse open )!use Lingua::EN::Titlecase::S
 my $body = $1;
 
 $file{ $libfn } =~ s!.*BEGIN.*FIXUP(?s:.*?)END.*FIXUP.*!$body!e or die "Couldn't fixup $libfn\n";
-
-$file{ $podfn } =~ s{(?=^\n=cut\s*\z)}{
+$file{ $libfn } =~ s{(?=^\n=cut\s*\z)}{
 	"\n=head1 AUTHORS\n\n=over 4\n\n" . ( join '', map "=item *\n\n$_\n\n", $meta->authors ) . "=back\n\n"
 	. "=head1 COPYRIGHT AND LICENSE\n\n" . $license->notice
 }me or die "Couldn't fixup POD\n";
 
 die unless -e 'Makefile.PL';
-$file{'README'} = Pod::Readme::Brief->new( $file{ $podfn } )->render( installer => 'eumm' );
+$file{'README'} = Pod::Readme::Brief->new( $file{ $libfn } )->render( installer => 'eumm' );
 
 my @manifest = slurp 'MANIFEST';
 my %manifest = map /\A([^\s#]+)()/, @manifest;

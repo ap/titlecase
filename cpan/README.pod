@@ -1,1 +1,1 @@
-lib/Lingua/EN/Titlecase/Simple.pod
+lib/Lingua/EN/Titlecase/Simple.pm
