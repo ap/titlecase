@@ -9,8 +9,8 @@ my %META = (
 		'John Gruber <http://daringfireball.net/2008/05/title_case>',
 		'Aristotle Pagaltzis <pagaltzis@gmx.de>',
 	],
-	license     => 'mit',
 	x_copyright => { holder => 'John Gruber, Aristotle Pagaltzis', year => 2018 },
+	license     => 'mit',
 	resources   => {
 		repository => { type => 'git', url => "$sc.git", web => $sc },
 		bugtracker => { web => $bt },
@@ -33,10 +33,11 @@ my %META = (
 
 my %MM_ARGS = ( EXE_FILES => [ 'bin/titlecase' ] );
 
-sub MY::postamble { <<'' }
+sub MY::postamble { -f 'META.yml' ? return : <<'' }
 create_distdir : MANIFEST
+distdir        : MANIFEST
 MANIFEST :
-	( git ls-files ':!README.pod' . ; echo MANIFEST ) > MANIFEST
+	( git ls-files ':!README.pod' ; echo MANIFEST ) > MANIFEST
 distdir : boilerplate
 .PHONY  : boilerplate
 boilerplate : distmeta
@@ -50,9 +51,11 @@ my $eumm_version  = eval $ExtUtils::MakeMaker::VERSION;
 my $mymeta        = $eumm_version >= 6.57_02;
 my $mymeta_broken = $mymeta && $eumm_version < 6.57_07;
 
+(my $basepath = (-d 'lib' && 'lib/') . $META{name}) =~ s{-}{/}g;
+
 ($MM_ARGS{NAME} = $META{name}) =~ s/-/::/g;
-($MM_ARGS{VERSION_FROM} = "lib/$MM_ARGS{NAME}.pm") =~ s{::}{/}g;
-$MM_ARGS{ABSTRACT_FROM} = $MM_ARGS{VERSION_FROM};
+$MM_ARGS{VERSION_FROM} = "$basepath.pm";
+$MM_ARGS{ABSTRACT_FROM} = -f "$basepath.pod" ? "$basepath.pod" : "$basepath.pm";
 $META{license} = [ $META{license} ]
 	if $META{license} && !ref $META{license};
 $MM_ARGS{LICENSE} = $META{license}[0]
@@ -74,7 +77,7 @@ for (qw(configure build test runtime)) {
 	defined $r->{$_} or delete $r->{$_} for keys %$r;
 }
 
-$MM_ARGS{MIN_PERL_VERSION} = delete $MM_ARGS{PREREQ_PM}{perl} || 0;
+$MM_ARGS{MIN_PERL_VERSION} = eval delete $MM_ARGS{PREREQ_PM}{perl} || 0;
 
 delete $MM_ARGS{MIN_PERL_VERSION}
 	if $eumm_version < 6.47_01;
