@@ -10,19 +10,23 @@ my %META = (
 	],
 	license     => 'mit',
 	x_copyright => { holder => 'John Gruber, Aristotle Pagaltzis', year => 2018 },
-	prereqs     => {
-		runtime => { requires => {qw(
-			perl                5.008001
-		)} },
-		test => { requires => {qw(
-			Data::Dumper        0
-			Test::More          0
-		)} },
-	},
-	dynamic_config => 0,
-	resources      => {
+	resources   => {
 		repository => { type => 'git', url => "git://$u.git", web => "https://$u" },
 		bugtracker => { web => "https://$u/issues" },
+	},
+	dynamic_config => 0,
+	prereqs => {
+		runtime => {
+			requires => {qw(
+				perl 5.008001
+			)},
+		},
+		test => {
+			requires => {qw(
+				Data::Dumper 0
+				Test::More 0
+			)},
+		},
 	},
 );
 
