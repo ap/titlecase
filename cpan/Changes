@@ -1,5 +1,9 @@
 Release history for Lingua-EN-Titlecase-Simple
 
+1.005 Tue 09 Aug 2022
+	- No functional changes
+	- Packaging fix to stop installing boilerplate.pl
+
 1.004 Tue 21 Aug 2018
 	- Fix for “100's” capitalisation
 	- Cover script for command line use
