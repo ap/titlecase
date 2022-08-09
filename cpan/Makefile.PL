@@ -1,6 +1,7 @@
 use 5.008001; use strict; use warnings;
 
-my $u = 'github.com/ap/titlecase';
+my $sc = q<https://github.com/ap/titlecase>;
+my $bt = q<https://github.com/ap/titlecase/issues>;
 
 my %META = (
 	name        => 'Lingua-EN-Titlecase-Simple',
@@ -11,8 +12,8 @@ my %META = (
 	license     => 'mit',
 	x_copyright => { holder => 'John Gruber, Aristotle Pagaltzis', year => 2018 },
 	resources   => {
-		repository => { type => 'git', url => "git://$u.git", web => "https://$u" },
-		bugtracker => { web => "https://$u/issues" },
+		repository => { type => 'git', url => "$sc.git", web => $sc },
+		bugtracker => { web => $bt },
 	},
 	dynamic_config => 0,
 	prereqs => {
