@@ -10,7 +10,6 @@ my %META = (
 	],
 	license     => 'mit',
 	x_copyright => { holder => 'John Gruber, Aristotle Pagaltzis', year => 2018 },
-	no_index    => {},
 	prereqs     => {
 		configure => { requires => {qw(
 			ExtUtils::MakeMaker 0
@@ -45,7 +44,7 @@ MANIFEST :
 distdir : boilerplate
 .PHONY  : boilerplate
 boilerplate : distmeta
-	$(PERL) boilerplate.pl $(DISTVNAME)
+	$(PERL) -Ilib inc/boilerplate.pl $(DISTVNAME)
 
 ## BOILERPLATE ###############################################################
 require ExtUtils::MakeMaker;
