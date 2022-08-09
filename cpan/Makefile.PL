@@ -11,21 +11,12 @@ my %META = (
 	license     => 'mit',
 	x_copyright => { holder => 'John Gruber, Aristotle Pagaltzis', year => 2018 },
 	prereqs     => {
-		configure => { requires => {qw(
-			ExtUtils::MakeMaker 0
-		)} },
 		runtime => { requires => {qw(
 			perl                5.008001
-			strict              0
-			utf8                0
-			warnings            0
 		)} },
 		test => { requires => {qw(
 			Data::Dumper        0
 			Test::More          0
-			constant            0
-			if                  0
-			open                0
 		)} },
 	},
 	dynamic_config => 0,
