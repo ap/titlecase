@@ -1,8 +1,20 @@
 #!/usr/bin/perl
 use 5.008001; use strict; use warnings; use utf8;
 
-our @SMALL_WORD
+# Added localizations to https://github.com/ap/titlecase
+our @SMALL_WORD_EN
 	= qw/ (?<!q&)a an and as at(?!&t) but by en for if in of on or the to v[.]? via vs[.]? /;
+our @SMALL_WORD_DE
+   = qw/ (?<!q&)und oder aber als bei mit nach von zu im in aus auf für mit bis über unter vor zum zur durch ohne gegen um an dem den des /;
+our @SMALL_WORD_PT
+   = qw/ (?<!q&)a as ao aos com como da das de do dos e em na nas no nos o os por um uma uns umas /;
+our @SMALL_WORD_ES
+		= qw/ (?<!q&)y e o u ni a as os las los de del al en con por para sobre entre sin hacia tras desde durante mediante según/;
+our @SMALL_WORD_FR
+		= qw/ (?<!q&)à au aux avec chez dans de des du en et pour par sur vers sous /;
+our @SMALL_WORD_IT
+		= qw/ (?<!q&)a al alla alle con da dal dall' delle dei degli del di in per su /;
+our @SMALL_WORD = ( @SMALL_WORD_EN, @SMALL_WORD_PT, @SMALL_WORD_DE, @SMALL_WORD_ES, @SMALL_WORD_FR, @SMALL_WORD_IT );
 
 my $apos = q/ (?: ['’] [[:lower:]]* )? /;
 
