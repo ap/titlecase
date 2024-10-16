@@ -51,6 +51,24 @@ sub titlecase {
 			(?= [[:punct:]]* \Z   # ... at the end of the title...
 			|   ['"’”)\]] [ ] )   # ... or of an inserted subphrase?
 		}{\u\L$1}xig;
+
+		# Exceptions for small words in hyphenated compound words
+		## e.g. "in-flight" -> In-Flight
+		s{
+			\b
+			(?<! -)					# Negative lookbehind for a hyphen; we don't want to match man-in-the-middle but do want (in-flight)
+			( $small_re )
+			(?= -[[:alpha:]]+)		# lookahead for "-someword"
+		}{\u\L$1}xig;
+
+		## # e.g. "Stand-in" -> "Stand-In" (Stand is already capped at this point)
+		s{
+			\b
+			(?<!…)					# Negative lookbehind for a hyphen; we don't want to match man-in-the-middle but do want (stand-in)
+			( [[:alpha:]]+- )		# $1 = first word and hyphen, should already be properly capped
+			( $small_re )           # ... followed by small word
+			(?!	- )					# Negative lookahead for another '-'
+		}{$1\u$2}xig;
 	}
 
 	wantarray ? @str : ( @str > 1 ) ? \@str : $str[0];
