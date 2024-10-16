@@ -14,7 +14,7 @@ sub titlecase {
 	for ( @str ) {
 		s{\A\s+}{}, s{\s+\z}{};
 
-		$_ = lc $_ unless /[[:lower:]]/;
+		$_ = lc $_ if not /[[:lower:]]/;
 
 		s{
 			\b (_*) (?:
@@ -27,18 +27,20 @@ sub titlecase {
 				( [[:alpha:]] [[:lower:]'’()\[\]{}]* $apos )       # or word w/o internal caps
 				|
 				( [[:alpha:]] [[:alpha:]'’()\[\]{}]* $apos )       # or some other word
-			) (?= _* \b )
+			) (_*) \b
 		}{
-			$1 .
-			( defined $2 ? $2         # preserve URL, domain, or email
-			: defined $3 ? lc $3      # lowercase small word
-			: defined $4 ? ucfirst $4 # capitalize lower-case word
-			: $5 )                    # preserve other kinds of word
+			$1 . (
+			defined $2 ? $2         # preserve URL, domain, or email
+			: defined $3 ? "\L$3"     # lowercase small word
+			: defined $4 ? "\u\L$4"   # capitalize word w/o internal caps
+			: $5                      # preserve other kinds of word
+			) . $6
 		}xeg;
 
-		# exceptions for small words: capitalize at start and end of title
+
+		# Exceptions for small words: capitalize at start and end of title
 		s{
-			( \A [[:punct:]]*          # start of title...
+			(  \A [[:punct:]]*         # start of title...
 			|  [:.;?!][ ]+             # or of subsentence...
 			|  [ ]['"“‘(\[][ ]*     )  # or of inserted subphrase...
 			( $small_re ) \b           # ... followed by small word
