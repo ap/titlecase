@@ -1,5 +1,9 @@
 Release history for Lingua-EN-Titlecase-Simple
 
+1.015 Wed 16 Oct 2024
+	- No /o switch in substitutions; the list of small words can now be changed at any time
+	- Special cases for small words in two-word compounds, like "stand-in" and "in-flight" (but not "man-in-the-middle")
+
 1.005 Tue 09 Aug 2022
 	- No functional changes
 	- Packaging fix to stop installing boilerplate.pl
