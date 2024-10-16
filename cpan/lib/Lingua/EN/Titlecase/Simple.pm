@@ -72,8 +72,6 @@ strings in scalar context is therefore L<discouraged|perlpolicy/discouraged>.
 =head2 C<@SMALL_WORD>
 
 Contains the list of words to avoid capitalizing.
-It may be changed before the first call to the C<titlecase> function.
-Any changes after that will have no effect.
 
 =head1 SEE ALSO
 
